@@ -31,6 +31,7 @@ namespace UnityEssentials
             PlayerLoopHook.RemoveFromPlayerLoop<Update>(Tick);
 
             OnFrameLimiter = null;
+            OnRender = null;
         }
     }
 
