@@ -1,0 +1,16 @@
+{
+    "name": "UnityEssentials.UnityGlobalRefreshrateLimiter",
+    "rootNamespace": "UnityEssentials",
+    "references": [
+        "GUID:cd0c86d488f143b4c8b7c930d24f2695"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
