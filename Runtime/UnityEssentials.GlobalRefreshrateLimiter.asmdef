@@ -1,5 +1,5 @@
 {
-    "name": "UnityEssentials.UnityGlobalRefreshrateLimiter",
+    "name": "UnityEssentials.GlobalRefreshrateLimiter",
     "rootNamespace": "UnityEssentials",
     "references": [
         "GUID:cd0c86d488f143b4c8b7c930d24f2695"
