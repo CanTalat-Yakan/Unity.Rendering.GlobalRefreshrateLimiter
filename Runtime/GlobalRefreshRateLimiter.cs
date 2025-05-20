@@ -15,7 +15,7 @@ namespace UnityEssentials
             SetTargetFPS(_targetFPS);
             QueryPerformanceCounter(out _lastFrameTicks);
             QualitySettings.vSyncCount = 0;
-            PlayerLoopHook.AddToPlayerLoop<Update>(FrameLimiter);
+            PlayerLoopHook.Add<Update>(FrameLimiter);
         }
 
         private static void Tick()
@@ -28,7 +28,7 @@ namespace UnityEssentials
 
         public static void Clear()
         {
-            PlayerLoopHook.RemoveFromPlayerLoop<Update>(Tick);
+            PlayerLoopHook.Remove<Update>(Tick);
 
             OnFrameLimiter = null;
             OnRender = null;
