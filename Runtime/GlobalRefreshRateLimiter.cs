@@ -13,20 +13,8 @@ namespace UnityEssentials
     /// player loop.</remarks>
     public static partial class GlobalRefreshRateLimiter
     {
-        /// <summary>
-        /// Occurs when the frame limiter triggers a tick event.
-        /// </summary>
-        /// <remarks>This event is invoked at regular intervals determined by the frame limiter's
-        /// configuration. Subscribers can use this event to execute logic that needs to run on each tick.</remarks>
         public static Action OnFrameLimiterTick;
 
-        /// <summary>
-        /// Initializes the application settings and prepares the runtime environment before the first scene is loaded.
-        /// </summary>
-        /// <remarks>This method is automatically invoked before the first scene is loaded, as specified
-        /// by the  <see cref="RuntimeInitializeOnLoadMethodAttribute"/> with <see
-        /// cref="RuntimeInitializeLoadType.BeforeSceneLoad"/>. It configures the target frame rate, disables vertical
-        /// synchronization, and sets up a custom update loop.</remarks>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Initialize()
         {
@@ -49,11 +37,6 @@ namespace UnityEssentials
             _targetFrameTimeTicks = (long)(_frequency / (double)_targetFPS);
         }
 
-        /// <summary>
-        /// Advances the application's state by performing a single update tick.
-        /// </summary>
-        /// <remarks>This method enforces frame rate limiting and clears application state if the
-        /// application is not in play mode.</remarks>
         private static void Tick()
         {
             FrameLimiter();
@@ -62,12 +45,6 @@ namespace UnityEssentials
                 Clear();
         }
 
-        /// <summary>
-        /// Clears the current frame limiter state by removing the update hook and resetting the event handler.
-        /// </summary>
-        /// <remarks>This method removes the <see cref="Update"/> hook associated with the frame limiter
-        /// and sets the <see cref="OnFrameLimiterTick"/> event to <see langword="null"/>. Call this method to release
-        /// resources or reset the frame limiter to its initial state.</remarks>
         private static void Clear()
         {
             OnFrameLimiterTick = null;
@@ -76,13 +53,6 @@ namespace UnityEssentials
         }
     }
 
-    /// <summary>
-    /// Provides functionality for globally limiting the refresh rate of rendering operations.
-    /// </summary>
-    /// <remarks>The <see cref="GlobalRefreshRateLimiter"/> class allows developers to control the target
-    /// frames per second (FPS) for rendering operations by setting a global frame rate limit. The <see
-    /// cref="OnFrameLimiterTick"/> action is invoked during each frame, and the frame limiter ensures that rendering adheres to
-    /// the specified target FPS.</remarks>
     public static partial class GlobalRefreshRateLimiter
     {
         private static float _targetFPS = 120.0f;
