@@ -4,14 +4,19 @@
   "displayName": "UnityEssentials GlobalRefreshrateLimiter",
   "description": "This is a part of the UnityEssentials Ecosystem",
   "unity": "2022.1",
-  "documentationUrl": "",
-  "changelogUrl": "",
-  "licensesUrl": "",
-  "dependencies": { "com.unityessentials.core": "1.0.0" },
+  "unityRelease": "",
+  "dependencies": {
+    "com.unityessentials.core": "1.0.0"
+  },
   "keywords": [],
   "author": {
     "name": "Unity Essentials",
     "email": "",
     "url": ""
-  }
+  },
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "samples": [],
+  "hideInEditor": true
 }
