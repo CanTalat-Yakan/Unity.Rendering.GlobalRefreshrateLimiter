@@ -18,7 +18,7 @@ namespace UnityEssentials
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Initialize()
         {
-            SetTargetFPS(_targetFPS);
+            SetTargetFrameRate(_targetFrameRate);
             QueryPerformanceCounter(out _lastFrameTicks);
             QualitySettings.vSyncCount = 0;
             PlayerLoopHook.Add<Update>(Tick);
@@ -29,12 +29,12 @@ namespace UnityEssentials
         /// </summary>
         /// <remarks>This method adjusts the internal timing calculations to achieve the specified frame
         /// rate. Providing a value less than or equal to 0 may result in undefined behavior.</remarks>
-        /// <param name="newFPS">The desired target FPS. Must be greater than 0.</param>
-        public static void SetTargetFPS(float newFPS)
+        /// <param name="frameRate">The desired target FPS. Must be greater than 0.</param>
+        public static void SetTargetFrameRate(float frameRate)
         {
-            _targetFPS = newFPS;
+            _targetFrameRate = frameRate;
             QueryPerformanceFrequency(out _frequency);
-            _targetFrameTimeTicks = (long)(_frequency / (double)_targetFPS);
+            _targetFrameTimeTicks = (long)(_frequency / (double)_targetFrameRate);
         }
 
         private static void Tick()
@@ -48,14 +48,13 @@ namespace UnityEssentials
         private static void Clear()
         {
             OnFrameLimiterTick = null;
-
             PlayerLoopHook.Remove<Update>(Tick);
         }
     }
 
     public static partial class GlobalRefreshRateLimiter
     {
-        private static float _targetFPS = 120.0f;
+        private static float _targetFrameRate = 120.0f;
         private static long _targetFrameTimeTicks;
         private static long _lastFrameTicks;
         private static long _frequency;
