@@ -1,6 +1,6 @@
 {
   "name": "com.unityessentials.globalrefreshratelimiter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Unity Rendering GlobalRefreshrateLimiter",
   "description": "This is a part of the UnityEssentials Ecosystem",
   "unity": "6000.0",
