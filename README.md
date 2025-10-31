@@ -26,7 +26,7 @@ Install the Unity Essentials entry package via Unity's Package Manager, then ins
 
 # Global Refreshrate Limiter
 
-> Quick overview: A global cadence for rendering and time‑sliced work, driven by a high‑precision frame limiter that disables VSync, hooks into the PlayerLoop, and signals subscribers on each tick.
+> Quick overview: A global cadence for rendering and time‑sliced work, driven by a high‑precision frame limiter that hooks into the PlayerLoop, and signals subscribers on each tick.
 
 A single, application‑wide frame cadence is maintained using high‑resolution timers. VSync is disabled and a precise sleep/spin wait is applied so that subscribers are notified on `OnFrameLimiterTick` at approximately the requested frequency. Systems like per‑camera frame limiters can subscribe to the tick to schedule rendering consistently across the project.
 
