@@ -48,7 +48,7 @@ A single, application‑wide frame cadence is maintained using high‑resolution
   - `QualitySettings.vSyncCount` is set to 0 so the limiter determines pacing instead of the display
 
 ## Requirements
-- Unity 6000.0+ (per package manifest)
+- Unity 6000.0+
 - Works in Play Mode and Player
 - VSync should be left disabled while the limiter is active (the limiter sets this to 0 at init)
 
