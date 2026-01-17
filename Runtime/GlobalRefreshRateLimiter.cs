@@ -62,7 +62,7 @@ namespace UnityEssentials
 
     public static partial class GlobalRefreshRateLimiter
     {
-        private static float _targetFrameRate = 120.0f;
+        private static float _targetFrameRate = 60.0f;
         private static long _targetFrameTimeTicks;
         private static long _lastFrameTicks;
         private static long _frequency;
