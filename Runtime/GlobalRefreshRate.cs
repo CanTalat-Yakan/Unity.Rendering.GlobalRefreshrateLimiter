@@ -7,42 +7,42 @@ using UnityEngine.PlayerLoop;
 namespace UnityEssentials
 {
     /// <summary>
-    /// Provides global functionality for managing and limiting the frame rate of the application.
+    /// Provides global functionality for managing and limiting the refresh rate of the application.
     /// </summary>
-    /// <remarks>This class allows for setting a target frame rate and provides an event to notify subscribers
+    /// <remarks>This class allows for setting a target refresh rate and provides an event to notify subscribers
     /// of frame updates. It is initialized automatically before the first scene load and integrates with the Unity
     /// player loop.</remarks>
-    public static partial class GlobalRefreshRateLimiter
+    public static partial class GlobalRefreshRate
     {
-        public static Action OnFrameLimiterTick;
+        public static Action OnTick;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Initialize()
         {
-            SetTargetFrameRate(_targetFrameRate);
+            SetTargetRefreshRate(_targetRefreshRate);
             _lastFrameTicks = Stopwatch.GetTimestamp();
             QualitySettings.vSyncCount = 0;
             PlayerLoopHook.Add<Update>(Tick);
         }
 
         /// <summary>
-        /// Sets the target frames per second (FPS) for the application.
+        /// Sets the target refresh rate for the update loop.
         /// </summary>
         /// <remarks>This method adjusts the internal timing calculations to achieve the specified frame
         /// rate. Providing a value less than or equal to 0 may result in undefined behavior.</remarks>
-        /// <param name="frameRate">The desired target FPS. Must be greater than 0.</param>
-        public static void SetTargetFrameRate(float frameRate)
+        /// <param name="refreshRate">The desired target FPS. Must be greater than 0.</param>
+        public static void SetTargetRefreshRate(float refreshRate)
         {
             // Guard against invalid values to prevent division by zero
-            if (frameRate <= 0f)
+            if (refreshRate <= 0f)
             {
-                UnityEngine.Debug.LogWarning($"GlobalRefreshRateLimiter: Invalid frameRate {frameRate}. Falling back to 60 FPS.");
-                frameRate = 60f;
+                UnityEngine.Debug.LogWarning($"GlobalRefreshRateLimiter: Invalid refreshRate {refreshRate}. Falling back to 60 FPS.");
+                refreshRate = 60f;
             }
 
-            _targetFrameRate = frameRate;
+            _targetRefreshRate = refreshRate;
             _frequency = Stopwatch.Frequency;
-            _targetFrameTimeTicks = (long)(_frequency / (double)_targetFrameRate);
+            _targetFrameTimeTicks = (long)(_frequency / (double)_targetRefreshRate);
         }
 
         private static void Tick()
@@ -55,29 +55,29 @@ namespace UnityEssentials
 
         private static void Clear()
         {
-            OnFrameLimiterTick = null;
+            OnTick = null;
             PlayerLoopHook.Remove<Update>(Tick);
         }
     }
 
-    public static partial class GlobalRefreshRateLimiter
+    public static partial class GlobalRefreshRate
     {
-        private static float _targetFrameRate = 60.0f;
+        private static float _targetRefreshRate = 60.0f;
         private static long _targetFrameTimeTicks;
         private static long _lastFrameTicks;
         private static long _frequency;
 
         /// <summary>
-        /// Regulates the frame rate by ensuring a consistent time interval between frames.
+        /// Regulates the refresh rate by ensuring a consistent time interval between frames.
         /// </summary>
         /// <remarks>This method calculates the time elapsed since the last frame and, if necessary,
-        /// delays execution  to maintain the target frame rate. It invokes the <see cref="OnFrameLimiterTick"/> delegate to
+        /// delays execution  to maintain the target refresh rate. It invokes the <see cref="OnTick"/> delegate to
         /// perform rendering  operations during each frame. The method uses high-resolution performance counters to
         /// measure time  intervals accurately.</remarks>
         private static void FrameLimiter()
         {
             // invoke tick handlers
-            OnFrameLimiterTick?.Invoke();
+            OnTick?.Invoke();
 
             long currentTicksAfterRender = Stopwatch.GetTimestamp();
 

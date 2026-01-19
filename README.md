@@ -24,19 +24,19 @@ Install the Unity Essentials entry package via Unity's Package Manager, then ins
 
 ---
 
-# Global Refreshrate Limiter
+# Global Refreshrate
 
-> Quick overview: A global cadence for rendering and time‑sliced work, driven by a high‑precision frame limiter that hooks into the PlayerLoop, and signals subscribers on each tick.
+> Quick overview: A global cadence for rendering and time‑sliced work, driven by a high‑precision refresh rate that hooks into the PlayerLoop, and signals subscribers on each tick.
 
-A single, application‑wide frame cadence is maintained using high‑resolution timers. VSync is disabled and a precise sleep/spin wait is applied so that subscribers are notified on `OnFrameLimiterTick` at approximately the requested frequency. Systems like per‑camera frame limiters can subscribe to the tick to schedule rendering consistently across the project.
+A single, application‑wide frame cadence is maintained using high‑resolution timers. VSync is disabled and a precise sleep/spin wait is applied so that subscribers are notified on `OnTick` at approximately the requested frequency. Systems like per‑camera refresh rate can subscribe to the tick to schedule rendering consistently across the project.
 
 ![screenshot](Documentation/Screenshot.png)
 
 ## Features
 - Global tick event
-  - `GlobalRefreshRateLimiter.OnFrameLimiterTick` is invoked once per target frame; any system can subscribe/unsubscribe
+  - `GlobalRefreshRate.OnTick` is invoked once per target frame; any system can subscribe/unsubscribe
 - Configurable target FPS
-  - `GlobalRefreshRateLimiter.SetTargetFrameRate(fps)` recalculates timing and applies immediately
+  - `GlobalRefreshRateLimiter.SetTargetRefreshRate(fps)` recalculates timing and applies immediately
   - Invalid values (≤ 0) are guarded and fall back to 60 FPS with a warning
 - PlayerLoop integration
   - Initialized automatically before the first scene load and hooked into the `Update` phase
@@ -54,11 +54,11 @@ A single, application‑wide frame cadence is maintained using high‑resolution
 
 ## Usage
 1) Set a global target FPS (optional at startup or any time)
-   - Call `GlobalRefreshRateLimiter.SetTargetFrameRate(120f)` (default is 120)
+   - Call `GlobalRefreshRateLimiter.SetTargetRefreshRate(120f)` (default is 120)
 2) Subscribe to the global tick
    - In your component: subscribe on enable, unsubscribe on disable
-     - `GlobalRefreshRateLimiter.OnFrameLimiterTick += YourHandler;`
-     - `GlobalRefreshRateLimiter.OnFrameLimiterTick -= YourHandler;`
+     - `GlobalRefreshRateLimiter.OnTick += YourHandler;`
+     - `GlobalRefreshRateLimiter.OnTick -= YourHandler;`
 3) Do work on tick
    - Use the callback to schedule rendering or other periodic work (e.g., per‑camera render windows)
 
@@ -70,7 +70,7 @@ Notes
 - Initialization
   - On load, VSync is disabled, the default target FPS is applied, and a PlayerLoop hook registers the internal `Tick`
 - Tick cycle
-  - Each frame, `FrameLimiter` first invokes `OnFrameLimiterTick` to allow subscribers to act
+  - Each frame, `GlobalRefresRate` first invokes `OnTick` to allow subscribers to act
   - Elapsed time since the previous tick is measured; if time remains to reach the target interval, a precise sleep is performed and a short spin completes the interval
   - The next reference timestamp is updated accurately using `Stopwatch`
 - Platform timing
@@ -88,5 +88,5 @@ Notes
 - `Runtime/GlobalRefreshRateLimiter.cs` – Global target FPS, PlayerLoop hook, tick event, and high‑precision timing helpers
 - `Runtime/UnityEssentials.GlobalRefreshrateLimiter.asmdef` – Runtime assembly definition
 
-## Tags
-unity, framerate, refresh‑rate, limiter, tick, cadence, vsync, playerloop, stopwatch, high‑precision, timing, performance
+## Tags~~~~
+unity, refreshrate, refresh‑rate, limiter, tick, cadence, vsync, playerloop, stopwatch, high‑precision, timing, performance
