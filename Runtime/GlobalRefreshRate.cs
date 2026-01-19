@@ -19,7 +19,7 @@ namespace UnityEssentials
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Initialize()
         {
-            SetTargetRefreshRate(_targetRefreshRate);
+            SetTarget(_targetRefreshRate);
             _lastFrameTicks = Stopwatch.GetTimestamp();
             QualitySettings.vSyncCount = 0;
             PlayerLoopHook.Add<Update>(Tick);
@@ -31,7 +31,7 @@ namespace UnityEssentials
         /// <remarks>This method adjusts the internal timing calculations to achieve the specified frame
         /// rate. Providing a value less than or equal to 0 may result in undefined behavior.</remarks>
         /// <param name="refreshRate">The desired target FPS. Must be greater than 0.</param>
-        public static void SetTargetRefreshRate(float refreshRate)
+        public static void SetTarget(float refreshRate)
         {
             // Guard against invalid values to prevent division by zero
             if (refreshRate <= 0f)
